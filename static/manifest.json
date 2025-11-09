@@ -1,0 +1,13 @@
+{
+  "display": "standalone",
+  "scope": "../",
+  "start_url": "../index.html",
+  "name": "OpenList",
+  "icons": [
+    {
+      "src": "../images/512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
