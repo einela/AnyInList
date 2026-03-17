@@ -1,0 +1,1 @@
+import{Wn as t,Zi as e,h as r}from"./store-DH9Djpcs.js";var a=a=>{let l;return"responsive"===r("settings_layout")&&(l="repeat(auto-fill, minmax(424px, 1fr))"),e(t,{w:"$full",gap:"$2",templateColumns:{"@initial":"1fr","@lg":l},get children(){return a.children}})};export{a as t};

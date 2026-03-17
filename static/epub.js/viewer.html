@@ -308,7 +308,7 @@
         URLSearchParams &&
         new URLSearchParams(document.location.search.substring(1))
       var url =
-        params && params.get("url") && decodeURIComponent(params.get("url"))
+        params && params.get("url")
       console.log(url)
       var currentSectionIndex =
         params && params.get("loc") ? params.get("loc") : undefined

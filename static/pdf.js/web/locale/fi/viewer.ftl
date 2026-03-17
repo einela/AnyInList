@@ -308,6 +308,10 @@ pdfjs-comment-floating-button =
     .title = Kommentti
     .aria-label = Kommentti
 pdfjs-comment-floating-button-label = Kommentti
+pdfjs-editor-comment-button =
+    .title = Kommentti
+    .aria-label = Kommentti
+pdfjs-editor-comment-button-label = Kommentti
 pdfjs-editor-signature-button =
     .title = Lisää allekirjoitus
 pdfjs-editor-signature-button-label = Lisää allekirjoitus
@@ -370,6 +374,21 @@ pdfjs-editor-add-saved-signature-button =
 pdfjs-free-text2 =
     .aria-label = Tekstimuokkain
     .default-content = Aloita kirjoittaminen…
+# Used to show how many comments are present in the pdf file.
+# Variables:
+#   $count (Number) - the number of comments.
+pdfjs-editor-comments-sidebar-title =
+    { $count ->
+        [one] Kommentti
+       *[other] Kommenttia
+    }
+pdfjs-editor-comments-sidebar-close-button =
+    .title = Sulje sivupaneeli
+    .aria-label = Sulje sivupaneeli
+pdfjs-editor-comments-sidebar-close-button-label = Sulje sivupaneeli
+# Instructional copy to add a comment by selecting text or an annotations.
+pdfjs-editor-comments-sidebar-no-comments1 = Näetkö jotain huomionarvoista? Korosta se ja jätä kommentti.
+pdfjs-editor-comments-sidebar-no-comments-link = Lue lisää
 
 ## Alt-text dialog
 
@@ -515,6 +534,7 @@ pdfjs-editor-undo-bar-message-freetext = Teksti poistettu
 pdfjs-editor-undo-bar-message-ink = Piirustus poistettu
 pdfjs-editor-undo-bar-message-stamp = Kuva poistettu
 pdfjs-editor-undo-bar-message-signature = Allekirjoitus poistettu
+pdfjs-editor-undo-bar-message-comment = Kommentti poistettu
 # Variables:
 #   $count (Number) - the number of removed annotations.
 pdfjs-editor-undo-bar-message-multiple =
@@ -586,25 +606,106 @@ pdfjs-editor-add-signature-cancel-button = Peruuta
 pdfjs-editor-add-signature-add-button = Lisää
 pdfjs-editor-edit-signature-update-button = Päivitä
 
+## Comment popup
+
+pdfjs-editor-edit-comment-popup-button-label = Muokkaa kommenttia
+pdfjs-editor-edit-comment-popup-button =
+    .title = Muokkaa kommenttia
+pdfjs-editor-delete-comment-popup-button-label = Poista kommentti
+pdfjs-editor-delete-comment-popup-button =
+    .title = Poista kommentti
+pdfjs-show-comment-button =
+    .title = Näytä kommentti
+
 ##  Edit a comment dialog
 
-pdfjs-editor-edit-comment-actions-button-label = Toiminnot
-pdfjs-editor-edit-comment-actions-button =
-    .title = Toiminnot
-pdfjs-editor-edit-comment-close-button-label = Sulje
-pdfjs-editor-edit-comment-close-button =
-    .title = Sulje
-pdfjs-editor-edit-comment-actions-edit-button-label = Muokkaa
-pdfjs-editor-edit-comment-actions-delete-button-label = Poista
-pdfjs-editor-edit-comment-manager-text-input =
-    .placeholder = Kirjoita kommenttisi
-pdfjs-editor-edit-comment-manager-cancel-button = Peruuta
-pdfjs-editor-edit-comment-manager-save-button = Tallenna
+# An existing comment is edited
+pdfjs-editor-edit-comment-dialog-title-when-editing = Muokkaa kommenttia
+pdfjs-editor-edit-comment-dialog-save-button-when-editing = Päivitä
+# No existing comment
+pdfjs-editor-edit-comment-dialog-title-when-adding = Lisää kommentti
+pdfjs-editor-edit-comment-dialog-save-button-when-adding = Lisää
+pdfjs-editor-edit-comment-dialog-text-input =
+    .placeholder = Aloita kirjoittaminen…
+pdfjs-editor-edit-comment-dialog-cancel-button = Peruuta
 
 ## Edit a comment button in the editor toolbar
 
-pdfjs-editor-edit-comment-button =
-    .title = Muokkaa kommenttia
+pdfjs-editor-add-comment-button =
+    .title = Lisää kommentti
+
+## The view manager is a sidebar displaying different views:
+##  - thumbnails;
+##  - outline;
+##  - attachments;
+##  - layers.
+## The thumbnails view is used to edit the pdf: remove/insert pages, ...
+
+pdfjs-toggle-views-manager-button =
+    .title = Näytä/piilota sivupaneeli
+pdfjs-toggle-views-manager-notification-button =
+    .title = Näytä/piilota sivupaneeli (dokumentissa on pienoiskuvat/sisällys/liitteitä/tasoja)
+pdfjs-toggle-views-manager-button-label = Näytä/piilota sivupaneeli
+pdfjs-views-manager-sidebar =
+    .aria-label = Sivupaneeli
+pdfjs-views-manager-view-selector-button =
+    .title = Näkymät
+pdfjs-views-manager-view-selector-button-label = Näkymät
+pdfjs-views-manager-pages-title = Sivut
+pdfjs-views-manager-outlines-title = Dokumentin sisällys
+pdfjs-views-manager-attachments-title = Liitteet
+pdfjs-views-manager-layers-title = Tasot
+pdfjs-views-manager-pages-option-label = Sivut
+pdfjs-views-manager-outlines-option-label = Dokumentin sisällys
+pdfjs-views-manager-attachments-option-label = Liitteet
+pdfjs-views-manager-layers-option-label = Tasot
+pdfjs-views-manager-add-file-button =
+    .title = Lisää tiedosto
+pdfjs-views-manager-add-file-button-label = Lisää tiedosto
+# Variables:
+#   $count (Number) - the number of selected pages.
+pdfjs-views-manager-pages-status-action-label =
+    { $count ->
+        [one] { $count } valittu
+       *[other] { $count } valittu
+    }
+pdfjs-views-manager-pages-status-none-action-label = Valitse sivut
+pdfjs-views-manager-pages-status-action-button-label = Hallitse
+pdfjs-views-manager-pages-status-copy-button-label = Kopioi
+pdfjs-views-manager-pages-status-cut-button-label = Leikkaa
+pdfjs-views-manager-pages-status-delete-button-label = Poista
+pdfjs-views-manager-pages-status-save-as-button-label = Tallenna nimellä…
+# Variables:
+#   $count (Number) - the number of selected pages to be cut.
+pdfjs-views-manager-status-undo-cut-label =
+    { $count ->
+        [one] 1 sivu leikattu
+       *[other] { $count } sivua leikattu
+    }
+# Variables:
+#   $count (Number) - the number of selected pages to be copied.
+pdfjs-views-manager-pages-status-undo-copy-label =
+    { $count ->
+        [one] 1 sivu kopioitu
+       *[other] { $count } sivua kopioitu
+    }
+# Variables:
+#   $count (Number) - the number of selected pages to be deleted.
+pdfjs-views-manager-pages-status-undo-delete-label =
+    { $count ->
+        [one] 1 sivu poistettu
+       *[other] { $count } sivua poistettu
+    }
+pdfjs-views-manager-pages-status-waiting-ready-label = Tiedostoa valmistellaan…
+pdfjs-views-manager-pages-status-waiting-uploading-label = Lähetetään tiedostoa…
+pdfjs-views-manager-status-warning-cut-label = Leikkaaminen epäonnistui. Päivitä sivu ja yritä uudelleen.
+pdfjs-views-manager-status-warning-copy-label = Kopiointi epäonnistui. Päivitä sivu ja yritä uudelleen.
+pdfjs-views-manager-status-warning-delete-label = Poisto epäonnistui. Päivitä sivu ja yritä uudelleen.
+pdfjs-views-manager-status-warning-save-label = Tallentaminen epäonnistui. Päivitä sivu ja yritä uudelleen.
+pdfjs-views-manager-status-undo-button-label = Kumoa
+pdfjs-views-manager-status-close-button =
+    .title = Sulje
+pdfjs-views-manager-status-close-button-label = Sulje
 
 ## Main menu for adding/removing signatures
 

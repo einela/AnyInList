@@ -1,1 +1,0 @@
-import{D as e,o as s,cD as r}from"./index-CmqZLNfj.js";const o=o=>{const n=s();return e(r,{get colorScheme(){return o.yes?"success":"danger"},get children(){return n("global."+(o.yes?"yes":"no"))}})};export{o as W};

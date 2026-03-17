@@ -1,0 +1,1 @@
+import{D as r,H as t,Zi as e,on as n}from"./store-DH9Djpcs.js";import{$t as o,it as a}from"./index-CdXvTCM_.js";var s=()=>{const[s]=t();return e(o,{get loading(){return s.loading},get children(){return e(a,{class:"word-wrap",get children(){var r;return null===(r=s())||void 0===r?void 0:r.content},get ext(){return n(r.obj.name)},toc:!0})}})};export{s as default};

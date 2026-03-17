@@ -1,1 +1,0 @@
-const e=e=>e&&e.total_space&&e.free_space&&e.total_space>0,t=e=>{let t=e.total_space,a=t-e.free_space;const s=["B","K","M","G","T","P","E"],c=1024;let o=0;for(;o<s.length-1&&(a>=c||t>=c);)a/=c,t/=c,o++;return`${a.toFixed(2)} / ${t.toFixed(2)} ${s[o]}`},a=e=>(e.total_space-e.free_space)/e.total_space*100,s=e=>e.free_space/e.total_space<.1;export{s as n,e as s,t,a as u};

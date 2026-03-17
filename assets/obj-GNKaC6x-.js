@@ -1,0 +1,1 @@
+var E=function(E){return E[E.UNKNOWN=0]="UNKNOWN",E[E.FOLDER=1]="FOLDER",E[E.VIDEO=2]="VIDEO",E[E.AUDIO=3]="AUDIO",E[E.TEXT=4]="TEXT",E[E.IMAGE=5]="IMAGE",E}({});export{E as t};

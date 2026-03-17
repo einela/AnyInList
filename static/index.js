@@ -14,7 +14,7 @@ let base2 = new URL("d",location).href // 下载路径
 let base3 = "?path=" // 查询字符串部分
 let base4 = base1 + base3 // 拼好的查询前缀
 
-let pathCache=[]
+let pathCache = 0
 
 async function loadPathCache(){
     try {
@@ -23,11 +23,12 @@ async function loadPathCache(){
             request.onsuccess = () => resolve(request.result), 
             request.onerror = reject
         ));
-        let fetchData = () => fetch("static/data.json.zst").then(res => res.arrayBuffer());
+        let fetchData = () => fetch("static/data.json.zst").then(res => res.ok ? res.arrayBuffer() : Promise.reject());
+        let decompress = data => JSON.parse(new TextDecoder().decode(fzstd.decompress(new Uint8Array(data))))
         let compressedData;
         
         try {
-            let request = indexedDB.open(base2);
+            let request = indexedDB.open(base2.replace(/^https?:\/\//,""));
             request.onupgradeneeded = () => request.result.createObjectStore("files");
             let database = await promisify(request);
             let objectStore = database.transaction("files").objectStore("files");
@@ -35,6 +36,7 @@ async function loadPathCache(){
             
             if (!compressedData) {
                 compressedData = await fetchData();
+                pathCache = decompress(compressedData)
                 objectStore = database.transaction("files", "readwrite").objectStore("files");
                 objectStore.clear();
                 objectStore.put(compressedData, __HASH__);
@@ -43,10 +45,7 @@ async function loadPathCache(){
         } catch(error) { 
             compressedData || (compressedData = await fetchData())
         }
-        
-        let decodedData = fzstd.decompress(new Uint8Array(compressedData));
-        let jsonString = new TextDecoder().decode(decodedData);
-        pathCache = JSON.parse(jsonString);
+        pathCache || (pathCache = decompress(compressedData))
     } catch(error) {
 
     }
@@ -90,13 +89,14 @@ async function loadPathCache(){
             ldap_login_tips: "login with ldap",
             logo: "images/logo.svg",
             main_color: "#1890ff",
+            non_efs_zip_encoding: "IBM437",
             ocr_api: "https://openlistteam-ocr-api-server.hf.space/ocr/file/json",
             package_download: "true",
             pagination_type: "pagination", // all:全部  pagination:分页  load_more:加载更多  auto_load_more:自动加载更多
             preview_archives_by_default: "true",
             preview_download_by_default: "false",
             readme_autorender: "true",
-            robots_txt: "User-agent:*\nAllow:/",
+            robots_txt: "User-agent: *\nAllow: /",
             search_index: "",
             settings_layout: "list",
             share_archive_preview: "false",
@@ -110,7 +110,7 @@ async function loadPathCache(){
             sso_compatibility_mode: "false",
             sso_login_enabled: "false",
             sso_login_platform: "",
-            version: "v4.1.6 (Commit: 08574785) - Frontend: v4.1.6 - Build at: 2025-11-03 03:40:51 +0000",
+            version: "v4.1.10 (Commit: e3c664f8) - Frontend: v4.1.10 - Build at: 2026-01-31 09:03:50 +0000",
             video_autoplay: "true",
             webauthn_login_enabled: "false"
         }
@@ -285,7 +285,7 @@ function fsSearch(path,searchName,searchType,page,per_page){
     }
     if(!per_page) per_page= 2e9 // 不大可能超过这个数
     searchName = searchName.trim().toLowerCase() // 去除搜查空格
-    let cached = searchName == prevName && (prevType ==  0 || prevType == searchType) && path.startsWith(prevPath)
+    let cached = searchName == prevName && (prevType ==  0 || prevType == searchType) && (path == prevPath || prevPath == "/" || path.startsWith(prevPath + "/"))
     // 如果搜寻名字相同，且搜寻类型相同，且路径是之前的子路径，可以不用重复查找
     if(!cached){ prevName = searchName ; prevPath = path ; prevType = searchType}
     init(searchName)
@@ -340,7 +340,7 @@ function fsSearch(path,searchName,searchType,page,per_page){
             "parent": parent,
             "name": c[0],
             "is_dir": is_dir,
-            "size": is_dir? 0:c[1],
+            "size": c[1],
             "type": is_dir? 1:getFileType(c[0])
         }
     })
@@ -365,7 +365,7 @@ function generateUrl(path){
 function hookXhref(r){
     // ?path=/a/b/c 获取 /a/b/c
     let path = (new URL(r).searchParams.get("path")||"").split("/").map(r=>encodeURIComponent(r)).join("/").replace("%40", "@")
-    return path ? new URL(path,base1).href : r;
+    return path ? new URL(path,base1).href + (r.endsWith("&from=search")?"?from=search":"") : r;
 }
 
 function gateway(path) {

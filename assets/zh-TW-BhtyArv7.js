@@ -1,0 +1,1 @@
+var a="簡體中文",n={lang:a};export{n,a as t};
